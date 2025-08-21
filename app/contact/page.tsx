@@ -9,22 +9,11 @@ import { MapPin, Phone, Mail, Clock } from "lucide-react"
 export default function ContactPage() {
   const offices = [
     {
-      city: "Los Angeles",
-      address: "1234 Sunset Boulevard, Suite 500\nLos Angeles, CA 90028",
-      phone: "+1 (323) 555-0123",
-      email: "la@maxteamvisual.com",
-    },
-    {
-      city: "New York",
-      address: "567 Broadway, Floor 12\nNew York, NY 10012",
-      phone: "+1 (212) 555-0456",
-      email: "ny@maxteamvisual.com",
-    },
-    {
-      city: "London",
-      address: "89 Shoreditch High Street\nLondon E1 6JN, UK",
-      phone: "+44 20 7946 0789",
-      email: "london@maxteamvisual.com",
+      city: "Morocco",
+      address:
+        "Based in Morocco, our office serves clients throughout the country.\nWherever you are, we're ready to come to you, providing convenient, on-site support nationwide.",
+      phone: "+212 638-553480",
+      email: "kodiji.mohammed@gmail.com",
     },
   ]
 
@@ -150,22 +139,22 @@ export default function ContactPage() {
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
                     <Phone className="h-5 w-5 text-primary" />
-                    <span className="text-foreground">+1 (323) 555-0123</span>
+                    <span className="text-foreground">+212 638-553480</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Mail className="h-5 w-5 text-primary" />
-                    <span className="text-foreground">hello@maxteamvisual.com</span>
+                    <span className="text-foreground">kodiji.mohammed@gmail.com</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Clock className="h-5 w-5 text-primary" />
-                    <span className="text-foreground">Mon-Fri 9AM-6PM PST</span>
+                    <span className="text-foreground">Mon-Fri 9AM-6PM GMT</span>
                   </div>
                 </div>
               </div>
 
               {/* Office Locations */}
               <div>
-                <h3 className="text-foreground mb-6">Our Offices</h3>
+                <h3 className="text-foreground mb-6">Our Office</h3>
                 <div className="space-y-6">
                   {offices.map((office, index) => (
                     <Card key={index} className="p-6 bg-card border-border">
