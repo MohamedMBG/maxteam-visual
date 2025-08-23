@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -60,6 +60,7 @@ const mockWorks = [
 
 export default function ManageWorks() {
   const [works, setWorks] = useState(mockWorks)
+  const [loading, setLoading] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
   const [editingWork, setEditingWork] = useState<any>(null)
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
@@ -76,17 +77,50 @@ export default function ManageWorks() {
     setIsEditDialogOpen(true)
   }
 
-  const handleSaveEdit = () => {
-    setWorks(works.map((work) => (work.id === editingWork.id ? editingWork : work)))
-    setIsEditDialogOpen(false)
-    setEditingWork(null)
-  }
-
-  const handleDelete = (id: number) => {
-    if (confirm("Are you sure you want to delete this work?")) {
-      setWorks(works.filter((work) => work.id !== id))
+  const handleSaveEdit = async () => {
+    try {
+      const res = await fetch(`/api/works/${editingWork.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(editingWork),
+      })
+      if (!res.ok) throw new Error("Failed to update work")
+      const updated = await res.json()
+      setWorks(works.map((work) => (work.id === updated.id ? updated : work)))
+      setIsEditDialogOpen(false)
+      setEditingWork(null)
+    } catch (e: any) {
+      alert(e.message || "Update failed")
     }
   }
+
+  const handleDelete = async (id: number) => {
+    if (!confirm("Are you sure you want to delete this work?")) return
+    try {
+      const res = await fetch(`/api/works/${id}`, { method: "DELETE" })
+      if (!res.ok) throw new Error("Failed to delete work")
+      setWorks(works.filter((work) => work.id !== id))
+    } catch (e: any) {
+      alert(e.message || "Delete failed")
+    }
+  }
+
+  useEffect(() => {
+    const load = async () => {
+      setLoading(true)
+      try {
+        const res = await fetch("/api/works")
+        if (!res.ok) throw new Error("Failed to load works")
+        const data = await res.json()
+        setWorks(data)
+      } catch (e) {
+        // keep mock if failed
+      } finally {
+        setLoading(false)
+      }
+    }
+    load()
+  }, [])
 
   const addImageUrl = (url: string) => {
     if (url.trim()) {

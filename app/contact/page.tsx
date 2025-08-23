@@ -1,3 +1,6 @@
+"use client"
+
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -7,6 +10,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { MapPin, Phone, Mail, Clock } from "lucide-react"
 
 export default function ContactPage() {
+  const [projectType, setProjectType] = useState("")
+  const [budget, setBudget] = useState("")
   const offices = [
     {
       city: "Morocco",
@@ -39,38 +44,72 @@ export default function ContactPage() {
             {/* Contact Form */}
             <Card className="p-8 bg-card border-border">
               <h2 className="text-foreground mb-6">Start Your Project</h2>
-              <form className="space-y-6">
+              <form
+                className="space-y-6"
+                onSubmit={async (e) => {
+                  e.preventDefault()
+                  const form = e.currentTarget as HTMLFormElement
+                  const formData = new FormData(form)
+                  const payload = {
+                    firstName: String(formData.get("firstName") || ""),
+                    lastName: String(formData.get("lastName") || ""),
+                    email: String(formData.get("email") || ""),
+                    phone: String(formData.get("phone") || ""),
+                    company: String(formData.get("company") || ""),
+                    projectType: projectType,
+                    budget: budget,
+                    timeline: String(formData.get("timeline") || ""),
+                    location: String(formData.get("location") || ""),
+                    message: String(formData.get("message") || ""),
+                  }
+                  try {
+                    const res = await fetch("/api/contact", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify(payload),
+                    })
+                    if (!res.ok) {
+                      const err = await res.json().catch(() => ({}))
+                      throw new Error(err.error || "Failed to send message")
+                    }
+                    alert("Thanks! Your message has been sent.")
+                    form.reset()
+                  } catch (error: any) {
+                    alert(error.message || "Could not send message")
+                  }
+                }}
+              >
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="firstName">First Name</Label>
-                    <Input id="firstName" placeholder="John" className="mt-2" />
+                    <Input id="firstName" name="firstName" placeholder="John" className="mt-2" />
                   </div>
                   <div>
                     <Label htmlFor="lastName">Last Name</Label>
-                    <Input id="lastName" placeholder="Doe" className="mt-2" />
+                    <Input id="lastName" name="lastName" placeholder="Doe" className="mt-2" />
                   </div>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="john@company.com" className="mt-2" />
+                    <Input id="email" name="email" type="email" placeholder="john@company.com" className="mt-2" />
                   </div>
                   <div>
                     <Label htmlFor="phone">Phone</Label>
-                    <Input id="phone" type="tel" placeholder="+1 (555) 123-4567" className="mt-2" />
+                    <Input id="phone" name="phone" type="tel" placeholder="+1 (555) 123-4567" className="mt-2" />
                   </div>
                 </div>
 
                 <div>
                   <Label htmlFor="company">Company</Label>
-                  <Input id="company" placeholder="Your Company Name" className="mt-2" />
+                  <Input id="company" name="company" placeholder="Your Company Name" className="mt-2" />
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="projectType">Project Type</Label>
-                    <Select>
+                    <Select value={projectType} onValueChange={setProjectType}>
                       <SelectTrigger className="mt-2">
                         <SelectValue placeholder="Select project type" />
                       </SelectTrigger>
@@ -86,7 +125,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <Label htmlFor="budget">Budget Range</Label>
-                    <Select>
+                    <Select value={budget} onValueChange={setBudget}>
                       <SelectTrigger className="mt-2">
                         <SelectValue placeholder="Select budget range" />
                       </SelectTrigger>
@@ -104,24 +143,25 @@ export default function ContactPage() {
 
                 <div>
                   <Label htmlFor="timeline">Desired Timeline</Label>
-                  <Input id="timeline" placeholder="e.g., 6 weeks, by March 2024" className="mt-2" />
+                  <Input id="timeline" name="timeline" placeholder="e.g., 6 weeks, by March 2024" className="mt-2" />
                 </div>
 
                 <div>
                   <Label htmlFor="location">Project Location</Label>
-                  <Input id="location" placeholder="e.g., Los Angeles, Remote, Multiple locations" className="mt-2" />
+                  <Input id="location" name="location" placeholder="e.g., Los Angeles, Remote, Multiple locations" className="mt-2" />
                 </div>
 
                 <div>
                   <Label htmlFor="message">Project Details</Label>
                   <Textarea
                     id="message"
+                    name="message"
                     placeholder="Tell us about your project, goals, target audience, and any specific requirements..."
                     className="mt-2 min-h-[120px]"
                   />
                 </div>
 
-                <Button size="lg" className="w-full bg-primary hover:bg-primary/90">
+                <Button size="lg" type="submit" className="w-full bg-primary hover:bg-primary/90">
                   Send Project Brief
                 </Button>
               </form>

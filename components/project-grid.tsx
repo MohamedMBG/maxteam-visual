@@ -1,149 +1,102 @@
 "use client"
 
-import React from "react"
+import React, { useEffect, useMemo, useState } from "react"
 
-import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Play, Award, Calendar, MapPin, Search, Filter } from "lucide-react"
-import Link from "next/link"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Award, Calendar, MapPin, Search, Filter } from "lucide-react"
 
-interface Project {
+interface WorkItem {
   id: number
-  slug: string
   title: string
   client: string
   category: string
-  year: string
-  location: string
-  awards: string[]
-  thumbnail: string
   description: string
-  featured?: boolean
+  startDate?: string
+  endDate?: string
+  location?: string
+  awards?: string
+  images: string[]
 }
 
-const projects: Project[] = [
-  {
-    id: 1,
-    slug: "luxury-brand-campaign",
-    title: "Luxury Brand Campaign",
-    client: "Premium Fashion House",
-    category: "Commercial",
-    year: "2024",
-    location: "Paris, France",
-    awards: ["Cannes Lions Gold", "D&AD Pencil"],
-    thumbnail: "/project-luxury-brand.jpg",
-    description:
-      "A cinematic journey through craftsmanship and elegance, showcasing the brand's heritage through stunning visuals and compelling storytelling.",
-    featured: true,
-  },
-  {
-    id: 2,
-    slug: "tech-innovation-documentary",
-    title: "Tech Innovation Documentary",
-    client: "Global Tech Corporation",
-    category: "Documentary",
-    year: "2024",
-    location: "Silicon Valley, USA",
-    awards: ["Emmy Nomination"],
-    thumbnail: "/project-tech-doc.jpg",
-    description:
-      "An in-depth exploration of cutting-edge technology and its impact on society, featuring interviews with industry leaders and stunning visualizations.",
-  },
-  {
-    id: 3,
-    slug: "automotive-excellence",
-    title: "Automotive Excellence",
-    client: "Luxury Car Manufacturer",
-    category: "Commercial",
-    year: "2023",
-    location: "Monaco",
-    awards: ["Clio Award", "One Show Merit"],
-    thumbnail: "/project-automotive.jpg",
-    description:
-      "High-octane cinematography capturing the essence of performance and luxury in motion, with breathtaking aerial shots and precision driving sequences.",
-  },
-  {
-    id: 4,
-    slug: "music-video-artist",
-    title: "Chart-Topping Music Video",
-    client: "International Recording Artist",
-    category: "Music Video",
-    year: "2024",
-    location: "Los Angeles, USA",
-    awards: ["MTV VMA Nomination"],
-    thumbnail: "/project-music-video.jpg",
-    description:
-      "A visually stunning music video that combines practical effects with cutting-edge VFX to create a surreal narrative experience.",
-  },
-  {
-    id: 5,
-    slug: "corporate-sustainability",
-    title: "Corporate Sustainability Series",
-    client: "Fortune 500 Company",
-    category: "Corporate",
-    year: "2023",
-    location: "Multiple Locations",
-    awards: ["Telly Award Gold"],
-    thumbnail: "/project-corporate.jpg",
-    description:
-      "A comprehensive video series showcasing corporate environmental initiatives across multiple continents and industries.",
-  },
-  {
-    id: 6,
-    slug: "fashion-week-coverage",
-    title: "Fashion Week Coverage",
-    client: "Fashion Media Group",
-    category: "Event",
-    year: "2023",
-    location: "Milan, Italy",
-    awards: ["Fashion Film Award"],
-    thumbnail: "/project-fashion.jpg",
-    description:
-      "Behind-the-scenes and runway coverage of Milan Fashion Week, capturing the energy and artistry of haute couture.",
-  },
-]
+function deriveYear(item: WorkItem): string {
+  const source = item.endDate || item.startDate
+  if (!source) return ""
+  const year = new Date(source).getFullYear()
+  return isNaN(year) ? "" : String(year)
+}
 
 export function ProjectGrid() {
-  const [filteredProjects, setFilteredProjects] = useState(projects)
+  const [works, setWorks] = useState<WorkItem[]>([])
+  const [filteredWorks, setFilteredWorks] = useState<WorkItem[]>([])
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [selectedYear, setSelectedYear] = useState("all")
   const [showFilters, setShowFilters] = useState(false)
+  const [selectedWork, setSelectedWork] = useState<WorkItem | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const categories = ["all", "Commercial", "Documentary", "Music Video", "Corporate", "Event"]
-  const years = ["all", "2024", "2023", "2022", "2021"]
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch("/api/works")
+        if (!res.ok) throw new Error("Failed to load works")
+        const data = (await res.json()) as WorkItem[]
+        setWorks(data)
+        setFilteredWorks(data)
+      } catch {
+        setWorks([])
+        setFilteredWorks([])
+      }
+    }
+    load()
+  }, [])
+
+  const categories = useMemo(() => {
+    const set = new Set<string>(["all"]) 
+    works.forEach((w) => w.category && set.add(w.category))
+    return Array.from(set)
+  }, [works])
+
+  const years = useMemo(() => {
+    const set = new Set<string>(["all"]) 
+    works.forEach((w) => {
+      const y = deriveYear(w)
+      if (y) set.add(y)
+    })
+    return Array.from(set).sort()
+  }, [works])
 
   const handleFilter = () => {
-    let filtered = projects
+    let filtered = works
 
     if (searchTerm) {
       filtered = filtered.filter(
-        (project) =>
-          project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          project.client.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          project.description.toLowerCase().includes(searchTerm.toLowerCase()),
+        (item) =>
+          item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.client.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.description.toLowerCase().includes(searchTerm.toLowerCase()),
       )
     }
 
     if (selectedCategory !== "all") {
-      filtered = filtered.filter((project) => project.category === selectedCategory)
+      filtered = filtered.filter((item) => item.category === selectedCategory)
     }
 
     if (selectedYear !== "all") {
-      filtered = filtered.filter((project) => project.year === selectedYear)
+      filtered = filtered.filter((item) => deriveYear(item) === selectedYear)
     }
 
-    setFilteredProjects(filtered)
+    setFilteredWorks(filtered)
   }
 
-  // Apply filters whenever search term or filters change
-  React.useEffect(() => {
+  useEffect(() => {
     handleFilter()
-  }, [searchTerm, selectedCategory, selectedYear])
+  }, [searchTerm, selectedCategory, selectedYear, works])
 
   return (
     <div className="space-y-8">
@@ -219,65 +172,55 @@ export function ProjectGrid() {
       </div>
 
       {/* Results Count */}
-      <div className="text-sm text-muted-foreground">
-        Showing {filteredProjects.length} of {projects.length} projects
-      </div>
+      <div className="text-sm text-muted-foreground">Showing {filteredWorks.length} of {works.length} projects</div>
 
       {/* Projects Grid */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filteredProjects.map((project) => (
-          <Card
-            key={project.id}
-            className={`group overflow-hidden bg-card border-border hover:border-primary/50 transition-all duration-300 ${
-              project.featured ? "md:col-span-2 lg:col-span-2" : ""
-            }`}
-          >
-            <Link href={`/work/${project.slug}`}>
-              <div className={`relative overflow-hidden ${project.featured ? "aspect-[2/1]" : "aspect-video"}`}>
-                <img
-                  src={`/abstract-geometric-shapes.png?height=${project.featured ? "400" : "300"}&width=${
-                    project.featured ? "800" : "500"
-                  }&query=${project.title} cinematic video production`}
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <Button size="lg" className="bg-primary/90 hover:bg-primary">
-                    <Play className="mr-2 h-5 w-5" />
-                    Watch Project
-                  </Button>
-                </div>
+        {filteredWorks.map((item) => {
+          const year = deriveYear(item)
+          const thumbnail = item.images?.[0] || "/placeholder.jpg"
+          const awardsList = item.awards ? item.awards.split(",").map((s) => s.trim()).filter(Boolean) : []
+          return (
+            <Card 
+              key={item.id} 
+              className="group overflow-hidden bg-card border-border hover:border-primary/50 transition-all duration-300 cursor-pointer"
+              onClick={() => {
+                setSelectedWork(item)
+                setIsModalOpen(true)
+              }}
+            >
+              <div className="relative overflow-hidden aspect-video">
+                <img src={thumbnail} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                 <div className="absolute top-4 left-4">
                   <Badge variant="secondary" className="bg-background/80 text-foreground">
-                    {project.category}
+                    {item.category}
                   </Badge>
                 </div>
-                {project.featured && (
-                  <div className="absolute top-4 right-4">
-                    <Badge className="bg-primary text-primary-foreground">Featured</Badge>
-                  </div>
-                )}
               </div>
 
               <div className="p-6">
-                <h3 className="text-foreground mb-2 group-hover:text-primary transition-colors">{project.title}</h3>
-                <p className="text-sm text-muted-foreground mb-4">{project.client}</p>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-4">{project.description}</p>
+                <h3 className="text-foreground mb-2 group-hover:text-primary transition-colors">{item.title}</h3>
+                <p className="text-sm text-muted-foreground mb-4">{item.client}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4">{item.description}</p>
 
                 <div className="flex items-center gap-4 text-xs text-muted-foreground mb-4">
-                  <div className="flex items-center gap-1">
-                    <Calendar className="h-3 w-3" />
-                    {project.year}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <MapPin className="h-3 w-3" />
-                    {project.location}
-                  </div>
+                  {year && (
+                    <div className="flex items-center gap-1">
+                      <Calendar className="h-3 w-3" />
+                      {year}
+                    </div>
+                  )}
+                  {item.location && (
+                    <div className="flex items-center gap-1">
+                      <MapPin className="h-3 w-3" />
+                      {item.location}
+                    </div>
+                  )}
                 </div>
 
-                {project.awards.length > 0 && (
+                {awardsList.length > 0 && (
                   <div className="flex flex-wrap gap-1">
-                    {project.awards.map((award) => (
+                    {awardsList.map((award) => (
                       <Badge key={award} variant="outline" className="text-xs border-primary/30 text-primary">
                         <Award className="h-3 w-3 mr-1" />
                         {award}
@@ -286,12 +229,98 @@ export function ProjectGrid() {
                   </div>
                 )}
               </div>
-            </Link>
-          </Card>
-        ))}
+            </Card>
+          )
+        })}
       </div>
 
-      {filteredProjects.length === 0 && (
+      {/* Work Detail Modal */}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          {selectedWork && (
+            <div className="space-y-6">
+              <DialogHeader>
+                <DialogTitle className="text-2xl font-bold">{selectedWork.title}</DialogTitle>
+              </DialogHeader>
+
+              {/* Images Gallery */}
+              {selectedWork.images && selectedWork.images.length > 0 && (
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold">Project Images</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {selectedWork.images.map((image, index) => (
+                      <div key={index} className="relative aspect-video overflow-hidden rounded-lg">
+                        <img 
+                          src={image} 
+                          alt={`${selectedWork.title} - Image ${index + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Project Details */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold">Project Details</h3>
+                
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="space-y-3">
+                    <div>
+                      <span className="text-sm font-medium text-muted-foreground">Client:</span>
+                      <p className="text-foreground">{selectedWork.client}</p>
+                    </div>
+                    <div>
+                      <span className="text-sm font-medium text-muted-foreground">Category:</span>
+                      <p className="text-foreground">{selectedWork.category}</p>
+                    </div>
+                    <div>
+                      <span className="text-sm font-medium text-muted-foreground">Status:</span>
+                      <Badge variant="outline">{selectedWork.status}</Badge>
+                    </div>
+                    {selectedWork.location && (
+                      <div>
+                        <span className="text-sm font-medium text-muted-foreground">Location:</span>
+                        <p className="text-foreground">{selectedWork.location}</p>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="space-y-3">
+                    {selectedWork.startDate && (
+                      <div>
+                        <span className="text-sm font-medium text-muted-foreground">Start Date:</span>
+                        <p className="text-foreground">{new Date(selectedWork.startDate).toLocaleDateString()}</p>
+                      </div>
+                    )}
+                    {selectedWork.endDate && (
+                      <div>
+                        <span className="text-sm font-medium text-muted-foreground">End Date:</span>
+                        <p className="text-foreground">{new Date(selectedWork.endDate).toLocaleDateString()}</p>
+                      </div>
+                    )}
+                    {selectedWork.awards && (
+                      <div>
+                        <span className="text-sm font-medium text-muted-foreground">Awards:</span>
+                        <p className="text-foreground">{selectedWork.awards}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Description */}
+                <div>
+                  <span className="text-sm font-medium text-muted-foreground">Description:</span>
+                  <p className="text-foreground mt-2 leading-relaxed">{selectedWork.description}</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {filteredWorks.length === 0 && (
         <div className="text-center py-12">
           <div className="text-muted-foreground mb-4">No projects found matching your criteria.</div>
           <Button

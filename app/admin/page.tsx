@@ -50,26 +50,35 @@ export default function AdminDashboard() {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("[v0] Submitting new work:", formData)
-    // Here you would typically send the data to your backend
-    alert("New work added successfully!")
-
-    // Reset form
-    setFormData({
-      title: "",
-      client: "",
-      description: "",
-      category: "",
-      status: "Planning",
-      budget: "",
-      startDate: "",
-      endDate: "",
-      location: "",
-      awards: "",
-      images: [],
-    })
+    try {
+      const res = await fetch("/api/works", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      })
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}))
+        throw new Error(err.error || "Failed to add work")
+      }
+      alert("New work added successfully!")
+      setFormData({
+        title: "",
+        client: "",
+        description: "",
+        category: "",
+        status: "Planning",
+        budget: "",
+        startDate: "",
+        endDate: "",
+        location: "",
+        awards: "",
+        images: [],
+      })
+    } catch (error: any) {
+      alert(error.message || "Something went wrong")
+    }
   }
 
   return (

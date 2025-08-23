@@ -1,0 +1,19 @@
+[
+  {
+    "id": 1,
+    "title": "Mawazine 2025 Sale",
+    "client": "Mawazine",
+    "description": "we were the reponsible company for filming the amazing mawazinw moments from the beatiful crowded audience to the best artists ",
+    "category": "Documentary",
+    "status": "Completed",
+    "budget": "50000",
+    "startDate": "2025-07-12",
+    "endDate": "2025-07-19",
+    "location": "Rabat, Sale",
+    "images": [
+      "https://mawazine.ma/wp-content/uploads/2019/03/bandeau_Sale.jpg",
+      "https://mawazine.ma/wp-content/uploads/2024/06/cp-2025.jpg",
+      "https://www.maroc-hebdo.com/_next/image?url=https%3A%2F%2Fbackoffice.maroc-hebdo.com%2Fuploads%2F4c0de1f5_f811_4e6d_b410_38a007a4774e_copie_f33412d162.jpg&w=1920&q=75"
+    ]
+  }
+]
