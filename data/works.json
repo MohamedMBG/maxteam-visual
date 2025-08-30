@@ -15,5 +15,20 @@
       "https://mawazine.ma/wp-content/uploads/2024/06/cp-2025.jpg",
       "https://www.maroc-hebdo.com/_next/image?url=https%3A%2F%2Fbackoffice.maroc-hebdo.com%2Fuploads%2F4c0de1f5_f811_4e6d_b410_38a007a4774e_copie_f33412d162.jpg&w=1920&q=75"
     ]
+  },
+  {
+    "id": 2,
+    "title": "Ghali - Duke | vidoe clip production",
+    "client": "Duke ( singer )",
+    "description": "We produced the official music video for Duke, delivering a visually striking and cinematic experience that reflects the artist’s unique style and musical identity. The production involved full creative direction, high-quality filming, advanced editing, and post-production to ensure a professional and impactful result. The video emphasizes Duke’s artistic vision, blending dynamic storytelling with powerful visuals to engage his audience and strengthen his brand presence.",
+    "category": "Music Video",
+    "status": "Completed",
+    "budget": "4300",
+    "startDate": "2025-04-12",
+    "endDate": "2025-04-22",
+    "location": "Ouarzazat, Morocco",
+    "images": [
+      "https://i.ytimg.com/vi/ro7yBoCThqg/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCBTC4tjPUTOQ2daEmhHOG49UPBKQ"
+    ]
   }
 ]

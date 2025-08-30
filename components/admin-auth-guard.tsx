@@ -31,14 +31,14 @@ const mockUsers: Record<string, User> = {
   },
   "producer@maxteamvisual.com": {
     id: "2",
-    name: "Sarah Chen",
+    name: "Nour el houda",
     email: "producer@maxteamvisual.com",
     role: "Producer",
     permissions: ["projects.read", "projects.write", "team.read", "analytics.read"],
   },
   "editor@maxteamvisual.com": {
     id: "3",
-    name: "David Rodriguez",
+    name: "Mehdi Bouchbib",
     email: "editor@maxteamvisual.com",
     role: "Editor",
     permissions: ["projects.read", "media.read", "media.write"],

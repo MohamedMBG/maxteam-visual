@@ -82,11 +82,11 @@ export default function ContactPage() {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="firstName">First Name</Label>
-                    <Input id="firstName" name="firstName" placeholder="John" className="mt-2" />
+                    <Input id="firstName" name="firstName" placeholder="Mohammed" className="mt-2" />
                   </div>
                   <div>
                     <Label htmlFor="lastName">Last Name</Label>
-                    <Input id="lastName" name="lastName" placeholder="Doe" className="mt-2" />
+                    <Input id="lastName" name="lastName" placeholder="Kodiji" className="mt-2" />
                   </div>
                 </div>
 
@@ -97,7 +97,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <Label htmlFor="phone">Phone</Label>
-                    <Input id="phone" name="phone" type="tel" placeholder="+1 (555) 123-4567" className="mt-2" />
+                    <Input id="phone" name="phone" type="tel" placeholder="+212 623-124441" className="mt-2" />
                   </div>
                 </div>
 

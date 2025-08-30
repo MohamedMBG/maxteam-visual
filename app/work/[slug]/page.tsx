@@ -51,9 +51,9 @@ const projectData = {
     timeline: "8 weeks from concept to delivery",
     budget: "$150,000 - $200,000",
     team: [
-      { name: "Marcus Thompson", role: "Director" },
-      { name: "David Rodriguez", role: "Cinematographer" },
-      { name: "Sarah Chen", role: "Producer" },
+      { name: "Kodiji Mohammed", role: "Director" },
+      { name: "Mehdi Bouchbib", role: "Cinematographer" },
+      { name: "Nour el houda", role: "Producer" },
       { name: "Elena Vasquez", role: "Art Director" },
     ],
     gear: ["ARRI Alexa LF", "Cooke S7/i Lenses", "Technocrane 30ft", "RED Komodo (B-Camera)", "DJI Ronin 4D"],
@@ -116,14 +116,14 @@ interface CollaborationState {
 // Mock collaboration data
 const mockCollaboration: CollaborationState = {
   activeUsers: [
-    { name: "Sarah Chen", avatar: "SC", status: "viewing" },
-    { name: "Marcus Thompson", avatar: "MT", status: "editing" },
+    { name: "Nour el houda", avatar: "SC", status: "viewing" },
+    { name: "Kodiji Mohammed", avatar: "MT", status: "editing" },
     { name: "Elena Vasquez", avatar: "EV", status: "viewing" },
   ],
   comments: [
     {
       id: "1",
-      user: { name: "Sarah Chen", avatar: "SC", role: "Producer" },
+      user: { name: "Nour el houda", avatar: "SC", role: "Producer" },
       content:
         "The color grading in the 0:45 sequence looks fantastic! The warm tones really enhance the craftsmanship story.",
       timestamp: "2 hours ago",
@@ -131,14 +131,14 @@ const mockCollaboration: CollaborationState = {
     },
     {
       id: "2",
-      user: { name: "Marcus Thompson", avatar: "MT", role: "Director" },
+      user: { name: "Kodiji Mohammed", avatar: "MT", role: "Director" },
       content:
         "Agreed! Should we consider adding a subtle vignette to the crane shot at 1:20 to draw more focus to the center?",
       timestamp: "1 hour ago",
       replies: [
         {
           id: "2-1",
-          user: { name: "David Rodriguez", avatar: "DR", role: "Cinematographer" },
+          user: { name: "Mehdi Bouchbib", avatar: "DR", role: "Cinematographer" },
           content: "Good call. I'll adjust that in the next revision.",
           timestamp: "45 minutes ago",
         },
@@ -148,7 +148,7 @@ const mockCollaboration: CollaborationState = {
   ],
   notifications: [
     { id: "1", message: "Marcus Thompson updated the color grade", timestamp: "5 minutes ago", type: "info" },
-    { id: "2", message: "New comment from Sarah Chen", timestamp: "2 hours ago", type: "success" },
+    { id: "2", message: "New comment from Nour el houda", timestamp: "2 hours ago", type: "success" },
   ],
 }
 

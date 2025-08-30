@@ -9,28 +9,28 @@ import { achievementBadges, teamFunFacts } from "@/data/badges"
 export default function AboutPage() {
   const team = [
     {
-      name: "Marcus Thompson",
+      name: "Kodiji Mohammed",
       role: "Creative Director & Founder",
       bio: "Award-winning director with 15+ years in commercial and documentary production. Marcus has led campaigns for Fortune 500 companies and his work has been featured at Cannes Lions.",
-      image: "/team-marcus.jpg",
+      image: "/kodiji.jpg",
       awards: ["Cannes Lions Gold", "D&AD Black Pencil"],
-      social: { linkedin: "#", twitter: "#", instagram: "#" },
+      social: { linkedin: "https://www.linkedin.com/company/maxteamprod/?originalSubdomain=ma", instagram: "https://www.instagram.com/maxteamvisual/" },
     },
     {
-      name: "Sarah Chen",
+      name: "Nour el houda admi",
       role: "Head of Production",
-      bio: "Production expert specializing in complex international shoots. Sarah ensures every project runs smoothly from pre-production through final delivery.",
+      bio: "Production expert specializing in complex international shoots. Nour el houda ensures every project runs smoothly from pre-production through final delivery.",
       image: "/team-sarah.jpg",
-      awards: ["Emmy Nomination", "Clio Award"],
-      social: { linkedin: "#", twitter: "#", instagram: "#" },
+      awards: [],
+      social: { linkedin: "https://www.linkedin.com/company/maxteamprod/?originalSubdomain=ma", instagram: "https://www.instagram.com/maxteamvisual/" },
     },
     {
-      name: "David Rodriguez",
+      name: "Mehdi Bouchbib",
       role: "Lead Cinematographer",
-      bio: "Master of visual storytelling with expertise in cutting-edge camera technology. David's cinematography has been recognized at film festivals worldwide.",
+      bio: "Master of visual storytelling with expertise in cutting-edge camera technology. Mehdi's cinematography has been recognized at film festivals worldwide.",
       image: "/team-david.jpg",
       awards: ["ASC Award", "Camerimage Bronze"],
-      social: { linkedin: "#", twitter: "#", instagram: "#" },
+      social: { linkedin: "https://www.linkedin.com/company/maxteamprod/?originalSubdomain=ma", instagram: "https://www.instagram.com/maxteamvisual/" },
     },
   ]
 

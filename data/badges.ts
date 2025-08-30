@@ -49,7 +49,7 @@ export const achievementBadges: AchievementBadge[] = [
 ]
 
 export const teamFunFacts = [
-  "Marcus once directed a commercial while skydiving - literally!",
-  "Sarah speaks 5 languages and has coordinated shoots on every continent.",
-  "David's camera collection is worth more than most people's cars.",
+  "Kodiji in one project visited and filmed in 6 cities in 3 days.",
+  "Nour el houda is a singer and she helped recording her voice and even edited her video clip with the team.",
+  "Mehdi's camera collection is worth more than his car.",
 ]
