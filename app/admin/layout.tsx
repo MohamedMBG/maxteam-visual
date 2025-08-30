@@ -133,12 +133,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => {
-                    localStorage.removeItem("adminLoggedIn")
-                    router.push("/admin/login")
-                  }}
+                  asChild
                 >
-                  <LogOut className="h-4 w-4" />
+                  <Link href="/admin/logout">
+                    <LogOut className="h-4 w-4" />
+                  </Link>
                 </Button>
               </div>
             </div>
