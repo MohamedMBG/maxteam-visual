@@ -2,11 +2,11 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Video, LogOut, Menu, X, User, Plus, Edit } from "lucide-react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { Suspense } from "react"
 
 const navigation = [
@@ -16,7 +16,21 @@ const navigation = [
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const router = useRouter()
   const pathname = usePathname()
+
+  useEffect(() => {
+    const loggedIn =
+      typeof window !== "undefined" &&
+      localStorage.getItem("adminLoggedIn") === "true"
+    if (!loggedIn && pathname !== "/admin/login") {
+      router.replace("/admin/login")
+    }
+  }, [pathname, router])
+
+  if (pathname === "/admin/login") {
+    return <>{children}</>
+  }
 
   const user = {
     name: "Admin",
@@ -116,7 +130,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   <div className="text-sm font-medium text-foreground">{user.name}</div>
                   <div className="text-xs text-muted-foreground">{user.role}</div>
                 </div>
-                <Button variant="ghost" size="sm">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    localStorage.removeItem("adminLoggedIn")
+                    router.push("/admin/login")
+                  }}
+                >
                   <LogOut className="h-4 w-4" />
                 </Button>
               </div>
