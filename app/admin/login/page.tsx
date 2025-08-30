@@ -4,14 +4,7 @@ import { useState, FormEvent } from "react"
 import { useRouter } from "next/navigation"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Eye, EyeOff } from "lucide-react"
 import { motion } from "framer-motion"
@@ -39,65 +32,64 @@ export default function AdminLogin() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-800 via-blue-900 to-blue-950 relative overflow-hidden"
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white"
     >
-      <div className="absolute inset-0 bg-[url('/animation-particles.png')] bg-cover opacity-20 pointer-events-none" />
-      <motion.div
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-32 -left-32 h-72 w-72 rounded-full bg-indigo-700/30 blur-3xl" />
+        <div className="absolute -bottom-32 -right-32 h-72 w-72 rounded-full bg-blue-700/30 blur-3xl" />
+      </div>
+      <motion.h1
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
+        className="mb-8 text-4xl font-bold"
       >
-        <Card className="w-full max-w-sm">
-          <CardHeader>
-            <CardTitle>Admin Login</CardTitle>
-            <CardDescription>
-              Enter your credentials to access the dashboard.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+        maxteam
+      </motion.h1>
+      <motion.div
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Card className="w-full max-w-sm border border-white/10 bg-black/40 shadow-2xl backdrop-blur-xl">
+          <CardContent className="p-6">
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="bg-black/20 text-white placeholder:text-gray-400"
+                required
+              />
+              <div className="relative">
                 <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="bg-black/20 text-white placeholder:text-gray-400"
                   required
                 />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <div className="relative">
-                  <Input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="absolute right-2 top-1/2 -translate-y-1/2"
-                    onClick={() => setShowPassword((prev) => !prev)}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
-                      <Eye className="h-4 w-4" />
-                    )}
-                  </Button>
-                </div>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </Button>
               </div>
               {error && (
                 <Alert variant="destructive">
                   <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
-              <Button type="submit" className="w-full">
-                Login
+              <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-500">
+                Log in
               </Button>
             </form>
           </CardContent>
