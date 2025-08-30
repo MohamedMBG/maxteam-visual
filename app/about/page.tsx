@@ -12,7 +12,8 @@ export default function AboutPage() {
       name: "Marcus Thompson",
       role: "Creative Director & Founder",
       bio: "Award-winning director with 15+ years in commercial and documentary production. Marcus has led campaigns for Fortune 500 companies and his work has been featured at Cannes Lions.",
-      image: "/team-marcus.jpg",
+      image:
+        "https://instagram.ftng2-1.fna.fbcdn.net/v/t51.2885-19/299837146_605608284473576_6262475497915159366_n.jpg?efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.ftng2-1.fna.fbcdn.net&_nc_cat=108&_nc_oc=Q6cZ2QH5tv7KIxRwGpK5V29_rSIK21L-waRLiCSmpP9xZF-MiCvRKYTvVSEm_N5gHYxF-iE&_nc_ohc=rrMoN-cmZg0Q7kNvwF-jjpe&_nc_gid=BvXqtCvfxlZ5u4qTaLbefg&edm=AP4sbd4BAAAA&ccb=7-5&oh=00_AfUW1tLyUgGBazphUxhvwY6JusQTRtM8AaU266aSqAVUfw&oe=68B8C582&_nc_sid=7a9f4b",
       awards: ["Cannes Lions Gold", "D&AD Black Pencil"],
       social: { linkedin: "#", twitter: "#", instagram: "#" },
     },
@@ -20,7 +21,8 @@ export default function AboutPage() {
       name: "Sarah Chen",
       role: "Head of Production",
       bio: "Production expert specializing in complex international shoots. Sarah ensures every project runs smoothly from pre-production through final delivery.",
-      image: "/team-sarah.jpg",
+      image:
+        "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=200&h=200",
       awards: ["Emmy Nomination", "Clio Award"],
       social: { linkedin: "#", twitter: "#", instagram: "#" },
     },
@@ -28,7 +30,8 @@ export default function AboutPage() {
       name: "David Rodriguez",
       role: "Lead Cinematographer",
       bio: "Master of visual storytelling with expertise in cutting-edge camera technology. David's cinematography has been recognized at film festivals worldwide.",
-      image: "/team-david.jpg",
+      image:
+        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&h=200",
       awards: ["ASC Award", "Camerimage Bronze"],
       social: { linkedin: "#", twitter: "#", instagram: "#" },
     },
@@ -156,7 +159,7 @@ export default function AboutPage() {
                 <Card className="p-8 bg-background border-border text-center group hover:border-primary/50 transition-colors">
                   <div className="relative w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden">
                     <img
-                      src={`/abstract-geometric-shapes.png?height=200&width=200&query=${member.name} professional headshot`}
+                      src={member.image}
                       alt={member.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                     />
