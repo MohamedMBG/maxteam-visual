@@ -330,86 +330,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Featured Projects Section */}
-      <section className="py-20 bg-background" ref={portfolioObserver.setElement}>
-        <div className="container mx-auto px-4">
-          <div
-            className={`text-center mb-16 transition-all duration-700 ${
-              portfolioObserver.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
-          >
-            <h2 className="text-4xl font-bold text-foreground mb-4">Featured Projects</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Discover our latest work that showcases the power of visual storytelling and cutting-edge production
-              techniques.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Nike Air Revolution",
-                client: "Nike",
-                category: "Commercial",
-                image: "/nike-commercial-bts.png",
-              },
-              {
-                title: "Tesla Model S Launch",
-                client: "Tesla",
-                category: "Product Film",
-                image: "/tesla-commercial-cinematic.png",
-              },
-              {
-                title: "Spotify Wrapped 2024",
-                client: "Spotify",
-                category: "Motion Graphics",
-                image: "/spotify-wrapped-graphics.png",
-              },
-            ].map((project, index) => (
-              <Card
-                key={index}
-                className={`group overflow-hidden bg-card border-border hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-2 ${
-                  portfolioObserver.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                }`}
-                style={{ transitionDelay: `${index * 100}ms` }}
-              >
-                <div className="aspect-video overflow-hidden">
-                  <img
-                    src={project.image || "/placeholder.svg"}
-                    alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-6">
-                  <div className="text-sm text-primary font-medium mb-2">{project.category}</div>
-                  <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
-                    {project.title}
-                  </h3>
-                  <p className="text-muted-foreground mb-4">{project.client}</p>
-                  <div className="flex items-center text-primary group-hover:translate-x-2 transition-transform duration-300">
-                    <span className="text-sm font-medium">View Project</span>
-                    <ArrowRight className="h-4 w-4 ml-2" />
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <a href="/work">
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-border text-foreground hover:bg-muted px-8 py-3 rounded-full transform hover:scale-105 transition-all duration-300 bg-transparent"
-              >
-                View All Projects
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </a>
-          </div>
-        </div>
-      </section>
-
       {/* Client Testimonials Section */}
       <section className="py-20 bg-card" ref={testimonialsObserver.setElement}>
         <div className="container mx-auto px-4">
@@ -429,25 +349,25 @@ export default function HomePage() {
               {
                 quote:
                   "MaxTeam Visual transformed our brand story into a cinematic masterpiece. Their attention to detail and creative vision exceeded all expectations.",
-                author: "Sarah Johnson",
-                role: "Marketing Director",
-                company: "Nike",
+                author: "ADN Professional",
+                role: "CEO - Founder",
+                company: "ADN Professional",
                 rating: 5,
               },
               {
                 quote:
                   "The animation work they delivered was absolutely stunning. Every frame was crafted with precision and artistic flair that brought our vision to life.",
-                author: "Michael Chen",
-                role: "Creative Director",
-                company: "Tesla",
+                author: "MOHAMMED AYADI",
+                role: "CEO",
+                company: "CAR RENTING BUSINESS",
                 rating: 5,
               },
               {
                 quote:
                   "Professional, creative, and incredibly talented. MaxTeam Visual delivered beyond our wildest expectations and on time.",
-                author: "Emma Rodriguez",
-                role: "Brand Manager",
-                company: "Spotify",
+                author: "Hamid Chayef",
+                role: "Restaurant Manager",
+                company: "Table d'or",
                 rating: 5,
               },
             ].map((testimonial, index) => (
@@ -572,16 +492,6 @@ export default function HomePage() {
                 >
                   Start Your Project
                   <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </a>
-              <a href="/work">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="border-border text-foreground hover:bg-muted px-10 py-4 text-lg font-medium rounded-full transform hover:scale-105 transition-all duration-300 bg-transparent"
-                >
-                  <Play className="mr-2 h-5 w-5" />
-                  Watch Our Reel
                 </Button>
               </a>
             </div>

@@ -12,7 +12,7 @@ export default function AboutPage() {
       name: "Kodiji Mohammed",
       role: "Creative Director & Founder",
       bio: "Award-winning director with 15+ years in commercial and documentary production. Marcus has led campaigns for Fortune 500 companies and his work has been featured at Cannes Lions.",
-      image: "https://instagram.ftng2-1.fna.fbcdn.net/v/t51.2885-19/299837146_605608284473576_6262475497915159366_n.jpg?efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.ftng2-1.fna.fbcdn.net&_nc_cat=108&_nc_oc=Q6cZ2QH5tv7KIxRwGpK5V29_rSIK21L-waRLiCSmpP9xZF-MiCvRKYTvVSEm_N5gHYxF-iE&_nc_ohc=rrMoN-cmZg0Q7kNvwF-jjpe&_nc_gid=BvXqtCvfxlZ5u4qTaLbefg&edm=AP4sbd4BAAAA&ccb=7-5&oh=00_AfUW1tLyUgGBazphUxhvwY6JusQTRtM8AaU266aSqAVUfw&oe=68B8C582&_nc_sid=7a9f4b",
+      image: "https://media.licdn.com/dms/image/v2/C5603AQEPq-KxCBjzhA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1632324607761?e=1759363200&v=beta&t=m-whN2oTO2avy1ZMutGsfsjzeIOWztefrxmmlfn8Fe0",
       awards: ["Cannes Lions Gold", "D&AD Black Pencil"],
       social: {
         linkedin: "https://www.linkedin.com/company/maxteamprod/?originalSubdomain=ma",
@@ -24,7 +24,7 @@ export default function AboutPage() {
       name: "Nour el houda admi",
       role: "Head of Production",
       bio: "Production expert specializing in complex international shoots. Nour el houda ensures every project runs smoothly from pre-production through final delivery.",
-      image: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=200&h=200&q=80",
+      image: "https://media.licdn.com/dms/image/v2/D4E03AQFcbInhveBa0w/profile-displayphoto-shrink_800_800/B4EZa.99gtHMAc-/0/1746960636975?e=1759363200&v=beta&t=K_CRekfP0QlqWfeSLtK9TLPjPscCilhTDlR9lB0X8-c",
       awards: [],
       social: {
         linkedin: "https://www.linkedin.com/company/maxteamprod/?originalSubdomain=ma",
